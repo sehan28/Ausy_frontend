@@ -1,6 +1,5 @@
 import React from 'react';
 import ManageUsers from "./ManageUsers.jsx";
-import ManageDepartments from "./ManageDepartments.jsx";
 import {  useState } from 'react';
 
 
@@ -28,11 +27,9 @@ const DashboardCards = () => {
 
             <div className="flex space-x-4 mb-4">
                 <button onClick={() => setView('users')} className="bg-blue-600 text-white px-4 py-2 rounded">Manage Users</button>
-                <button onClick={() => setView('departments')} className="bg-green-600 text-white px-4 py-2 rounded">Manage Departments</button>
             </div>
 
             {view === 'users' && <ManageUsers />}
-            {view === 'departments' && <ManageDepartments />}
 
         </div>
 

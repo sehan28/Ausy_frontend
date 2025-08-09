@@ -11,35 +11,31 @@ const ManageUsers = () => {
     });
     const [editingId, setEditingId] = useState(null);
 
+    // ✅ Error handler for Axios
     const handleAxiosError = (label = 'Error', err) => {
         try {
             const status = err?.response?.status ?? 'N/A';
-            // Safely get message from response data or fallback to err.message
-            const message = err?.response?.data?.message
-                || (typeof err?.response?.data === 'string' ? err.response.data : null)
-                || err.message
-                || '[No error message]';
-
-            console.error(`[${label}] ❌ Axios Error [Status ${status}]: ${message}`);
+            const data = err?.response?.data ?? '[No error message]';
 
             if (err.response) {
-                console.error('Full response data:', err.response.data);
+                console.error(`[${label}] ❌ Server Error:`, data, `(Status ${status})`);
             } else if (err.request) {
-                console.error('No response received:', err.request);
+                console.error(`[${label}] ❌ No response from server`, err.request);
             } else {
-                console.error('Axios error message:', err.message);
+                console.error(`[${label}] ❌ Axios setup error:`, err.message);
             }
         } catch (loggingError) {
             console.error(`❌ Failed to log error for ${label}:`, loggingError);
         }
     };
 
+    // ✅ Fetch users from backend
     const fetchUsers = async () => {
         try {
             const res = await axiosInstance.get('/users');
-            setUsers(res.data);
+            setUsers(Array.isArray(res.data) ? res.data : []);
         } catch (err) {
-            console.error('❌ Failed to fetch users', err);
+            handleAxiosError('❌ Failed to fetch users', err);
         }
     };
 

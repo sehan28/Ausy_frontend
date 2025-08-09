@@ -10,8 +10,11 @@ import Contact from './pages/Contact';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import OwnerDashboard from './pages/owner/OwnerDashboard';
 import ManagerDashboard from './pages/manager/ManagerDashboard';
+import SupplierCrud from './pages/manager/SupplierCRUD';
 import NotFound from './pages/NotFound';
 import PrivateRoute from './routes/PrivateRoute';
+import BuyerCRUD from './pages/manager/BuyerCRUD';
+import BranchCRUD from './components/BranchCRUD';
 
 function App() {
     return (
@@ -33,10 +36,14 @@ function App() {
 
                     <Route element={<PrivateRoute roles={['OWNER']} />}>
                         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+                        <Route path="/owner/branches" element={<BranchCRUD />} />
                     </Route>
 
                     <Route element={<PrivateRoute roles={['MANAGER']} />}>
                         <Route path="/manager/dashboard" element={<ManagerDashboard />} />
+                        <Route path="/manager/suppliers" element={<SupplierCrud />} />
+                        <Route path="/manager/buyers" element={<BuyerCRUD />} />
+                        <Route path="*" element={<h1>404 - Page not found</h1>} />
                     </Route>
 
                     {/* 404 Not Found */}
